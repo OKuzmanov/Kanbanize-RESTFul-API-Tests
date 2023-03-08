@@ -8,4 +8,17 @@
 <pre>SUBDOMAIN=exampleSubDomain
 API_KEY=exampleApiKey</pre>
 
-Генерирайте свой subdomain и apiKey от сайта на Kanbanize и поставете стойностите на мястото на "exampleSubDomain" и "exampleApiKey".
+<ol type="1">
+<li>
+<p>Генерирайте свой subdomain и apiKey от сайта на Kanbanize и поставете стойностите на мястото на "exampleSubDomain" и "exampleApiKey".</p>
+</li>
+<li>
+<p>Клонирайте проекта на локалната си машина.</p>
+</li>
+<li>
+<p>Отворете го в IDE по ваш избор.</p>
+</li>
+<li>
+<p>Проектът трябва да е готов за преглеждане :)</p>
+</li>
+</ul>
