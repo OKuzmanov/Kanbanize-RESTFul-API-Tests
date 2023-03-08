@@ -1,33 +1,35 @@
 package com.kanbanize.tests;
 
-import com.kanbanize.pojos.CardPojo;
-import com.kanbanize.utils.JsonPayload;
+import io.github.cdimascio.dotenv.Dotenv;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
-import io.restassured.path.json.JsonPath;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import org.apache.commons.text.StringSubstitutor;
 import org.hamcrest.Matchers;
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
 
-import java.util.Random;
-
-import static io.restassured.RestAssured.given;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BaseTest {
-    private String subdomain = "nocompanyyet";
-    private String apiKey = "9mU3VZAgXJkGoHNwwjos43t3FVMT2YaVlAXZ3EhL";
-    private final String BASE_URL = "https://" + subdomain + ".kanbanize.com/api/v2";
+    private String baseUrl = "https://${subdomain}.kanbanize.com/api/v2";
 
     @BeforeTest
     public void setup() {
+        Dotenv dotenv = Dotenv.load();
+        String apiKey = dotenv.get("API_KEY");
+        String subdomain = dotenv.get("SUBDOMAIN");
+
+        Map<String, String> valuesMap = new HashMap<>();
+        valuesMap.put("subdomain", subdomain);
+
+        StringSubstitutor sub = new StringSubstitutor(valuesMap);
+
         RequestSpecification customReqSpec = new RequestSpecBuilder()
-                .setBaseUri(BASE_URL)
+                .setBaseUri(sub.replace(baseUrl))
                 .addHeader("apiKey", apiKey)
                 .addHeader("Content-Type", "application/json")
                 .log(LogDetail.ALL)
